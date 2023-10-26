@@ -2,6 +2,7 @@ package input;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import java.util.AbstractMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -17,6 +18,7 @@ import input.components.point.PointNode;
 import input.components.segment.SegmentNode;
 import input.parser.JSONParser;
 
+
 public class InputFacade
 {
 	/**
@@ -30,7 +32,7 @@ public class InputFacade
 	 */
 	public static FigureNode extractFigure(String filepath)
 	{
-        // TODO
+		
 	}
 	
 	/**
