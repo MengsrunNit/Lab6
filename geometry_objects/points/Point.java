@@ -79,20 +79,29 @@ public class Point implements Comparable<Point>
 	 */
 	public static int LexicographicOrdering(Point p1, Point p2)
 	{
-		// TODO
+
+		if(p1._x > p2._x) return 1;
+		if(p1._x < p2._x) return -1;
+		
+		if(p1._y > p2._y) return 1;
+		if(p1._y < p2._y) return -1;
+		
+		return 0;
+		
 	}
 
 	@Override
 	public int compareTo(Point that)
 	{
 		if (that == null) return 1;
-
 		return Point.LexicographicOrdering(this, that);
 	}
 	
 	@Override
 	public boolean equals(Object obj)
 	{
-        // TODO
+		if (obj == null || (!(obj instanceof Point))) return false;
+		Point n = (Point) obj;
+        return MathUtilities.doubleEquals(n._x, _x) && MathUtilities.doubleEquals(n._y, _y);
 	}
 }
