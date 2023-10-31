@@ -78,7 +78,14 @@ public class PointDatabase
 	public Point getPoint(String name)
 	{
         // TODO
-		
+		// iterate through all the point in the database and compare to the name
+		for(Point pt: _factory.getAllPoints()) {
+			if(name.equals(pt.getName())) {
+				return pt; 
+			}
+		}
+		// if there is no point name exist return null
+		return null; 
 		
 	}
 
@@ -92,6 +99,7 @@ public class PointDatabase
 	public Point getPoint(Point pt)
 	{
         // TODO
+		return _factory.get(pt);
 	}
 
 	/**
@@ -102,6 +110,7 @@ public class PointDatabase
 	 */
 	public Point getPoint(double x, double y)
 	{
-        // TODO
+        return _factory.get(x, y);
+		
 	}
 }

@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.HashSet;
 
 /*
  * Given a pair of coordinates; generate a unique name for it;
@@ -16,12 +17,12 @@ public class PointNamingFactory
 	// Prefix associated with each generated name so those names are easily distinguishable
 	private static final String _PREFIX = "*_";
 
-    // Constants reflecting our naming characters for generated names.
+	// Constants reflecting our naming characters for generated names.
 	private static final char START_LETTER = 'A';
 	private static final char END_LETTER = 'Z';
 
-    //
-    // the number of characters in the generated names:
+	//
+	// the number of characters in the generated names:
 	// "A" and 1 -> "A"
 	// "B" and 3 -> "BBB"
 	//
@@ -39,7 +40,7 @@ public class PointNamingFactory
 	public PointNamingFactory()
 	{
 		// TODO
-		
+
 		_database = new LinkedHashMap<Point, Point>(); 
 	}
 
@@ -60,10 +61,10 @@ public class PointNamingFactory
 	 * Overloaded add / lookup mechanism for this database.
 	 *
 	 * @param pt -- a Point object (may or may not be named)
-	 
+
 	 * @return THE point object in the database corresponding to its coordinate pair
-                    * the object in the database if it already exists or
-					* a completely new point that has been added to the database
+	 * the object in the database if it already exists or
+	 * a completely new point that has been added to the database
 	 */
 	public Point put(Point pt)
 	{
@@ -79,13 +80,15 @@ public class PointNamingFactory
 	 * @param y -- single coordinate
 
 	 * @return THE point object in the database corresponding to its coordinate pair
-                    * the object in the database if it already exists or
-					* a completely new point that has been added to the database (with generated name)
+	 * the object in the database if it already exists or
+	 * a completely new point that has been added to the database (with generated name)
 	 */
 	public Point put(double x, double y)
 	{
 		// TODO
-		
+		if(get(x,y) == null) {
+			
+		}
 		Point p = new Point(x, y);
 		return put(p);
 	}
@@ -128,7 +131,7 @@ public class PointNamingFactory
 		Point p = new Point(x, y);
 		return get(p);
 	}	
-	
+
 	public Point get(Point pt)
 	{
 		// TODO
@@ -141,31 +144,31 @@ public class PointNamingFactory
 	 * @return simple containment; no updating
 	 */
 	public boolean contains(double x, double y) { return _database.containsKey(_PREFIX) }
-	
+
 	public boolean contains(Point p) { 
 		return contains(p.getX(), p.getY());
-	
-	
-	/* TODO */ }
 
-	
+
+		/* TODO */ }
+
+
 	/**
 	 * Constructs the next (complete with prefix) generated name.
 	 * Names should be of the form PREFIX + current name
 	 *
 	 * This method should also invoke updating of the current name
 	 * to reflect the 'next' name in the sequence.
-     *	 
+	 *	 
 	 * @return the next complete name in the sequence including prefix.
 	 */
 	private String getCurrentName()
 	{
-        // TODO
-		for(Point pt:_database.keySet()) {
-			
-		}
-		
-		
+		// TODO
+		String currentName = _PREFIX + _currentName;
+		updateName();
+		return currentName; 
+
+
 	}
 
 	/**
@@ -174,16 +177,34 @@ public class PointNamingFactory
 	 */
 	private void updateName()
 	{
-        // TODO
+		// TODO
+		char currentChar = _currentName.charAt(0);
+		int intChar = currentChar + 1; 
+		char updateChar = (char) intChar;
+
+		if(updateChar > END_LETTER ) {
+			_numLetters++; 
+			updateChar = START_LETTER; 
+		}
+		_currentName = "";
+		for (int i=0; i< _numLetters; i++) {
+			_currentName += updateChar; 
+		}
+	
 	}
 
 	/**
-	 * @return The entire database of points.
+	 * @return The enti
+	 * re database of points.
 	 */
 	public  Set<Point> getAllPoints()
 	{
-        // TODO
-		Set<Point> pointSet = new Set<>(); 
+		// TODO
+		Set<Point> pointSet = new HashSet<Point>(); 
+		for(Point pt: _database.keySet()) {
+			pointSet.add(pt);
+		}
+		return pointSet; 
 	}
 
 	public void clear() { _database.clear(); }
@@ -192,6 +213,6 @@ public class PointNamingFactory
 	@Override
 	public String toString()
 	{
-        // TODO
+		// TODO
 	}
 }
