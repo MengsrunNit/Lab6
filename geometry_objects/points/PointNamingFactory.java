@@ -39,6 +39,7 @@ public class PointNamingFactory
 	public PointNamingFactory()
 	{
 		// TODO
+		
 		_database = new LinkedHashMap<Point, Point>(); 
 	}
 
@@ -84,6 +85,7 @@ public class PointNamingFactory
 	public Point put(double x, double y)
 	{
 		// TODO
+		
 		Point p = new Point(x, y);
 		return put(p);
 	}
@@ -126,6 +128,7 @@ public class PointNamingFactory
 		Point p = new Point(x, y);
 		return get(p);
 	}	
+	
 	public Point get(Point pt)
 	{
 		// TODO
@@ -138,8 +141,14 @@ public class PointNamingFactory
 	 * @return simple containment; no updating
 	 */
 	public boolean contains(double x, double y) { return _database.containsKey(_PREFIX) }
-	public boolean contains(Point p) { /* TODO */ }
+	
+	public boolean contains(Point p) { 
+		return contains(p.getX(), p.getY());
+	
+	
+	/* TODO */ }
 
+	
 	/**
 	 * Constructs the next (complete with prefix) generated name.
 	 * Names should be of the form PREFIX + current name
@@ -152,6 +161,11 @@ public class PointNamingFactory
 	private String getCurrentName()
 	{
         // TODO
+		for(Point pt:_database.keySet()) {
+			
+		}
+		
+		
 	}
 
 	/**
@@ -169,6 +183,7 @@ public class PointNamingFactory
 	public  Set<Point> getAllPoints()
 	{
         // TODO
+		Set<Point> pointSet = new Set<>(); 
 	}
 
 	public void clear() { _database.clear(); }
