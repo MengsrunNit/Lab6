@@ -54,8 +54,8 @@ class PointNamingFactoryTest {
 		//Add a new one with name
 		assertTrue(pnf.get(23, 6) == null);
 		pnf.put(new Point("HI", 23, 6));
+		assertTrue(pnf.get(new Point(23, 6)).equals(new Point("HI", 23, 6)));
 		assertTrue(pnf.get(new Point(23, 6)).getName().equals("HI"));
-		assertTrue(pnf.get(new Point("HI", 23, 6)).getName().equals("HI"));
 	}
 	@Test
 	void containsTest() 
@@ -110,7 +110,10 @@ class PointNamingFactoryTest {
 		pnf.put(new Point(8, 4));
 		pnf.put(new Point(13, 12));
 		pnf.put(new Point(245, 15));
+		//Checking increase in numLetters
 		assertTrue(pnf.get(245, 15).getName().equals("*_AA"));
+		//Checks inserted point with name doesn't interrupt currentName
+		pnf.put(new Point("Inserted", -52, 0));
 		pnf.put(new Point(-53, 0));
 		assertTrue(pnf.get(-53, 0).getName().equals("*_BB"));
 		pnf.put(new Point(1005, 0));

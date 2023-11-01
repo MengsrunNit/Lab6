@@ -38,6 +38,8 @@ class PointTest {
 		Point p10 = new Point(100, 100);
 		assertEquals(Point.LexicographicOrdering(p9, p10), 0);
 	}
+	
+	@Test
 	void compareTest() {
 		
 		//Same tests as above, pushed through compareTo

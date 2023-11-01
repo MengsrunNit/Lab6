@@ -31,8 +31,7 @@ public class InputFacade
 	public static FigureNode extractFigure(String filepath)
 	{
 		//Parses the JSON file in the same way as we have done previously, but returns FigureNode
-		GeometryBuilder GeoBuilder = new GeometryBuilder();
-		JSONParser parser = new JSONParser(GeoBuilder);
+		JSONParser parser = new JSONParser(new GeometryBuilder());
 		String figureStr = utilities.io.FileUtilities.readFileFilterComments(filepath);
 		return (FigureNode) parser.parse(figureStr);
 	}
@@ -55,13 +54,14 @@ public class InputFacade
 		
 	}
 	
-	private static PointDatabase toPointDatabase(Set<PointNode> pnd) {
-		
+	private static PointDatabase toPointDatabase(Set<PointNode> pnd) 
+	{	
 		//Loops through the given PND, adds each PN as Points in PointDatabase
 		PointDatabase pd = new PointDatabase();
 		for(PointNode pn: pnd) {
-			pd.put(pn.getName(), pn.getX(), pn.getX());
+			pd.put(pn.getName(), pn.getX(), pn.getY());
 		}
+
 		return pd;
 	}
 	private static HashSet<Segment> toSegmentSet(Map<PointNode, Set<PointNode>> ss) {

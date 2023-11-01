@@ -70,16 +70,20 @@ public class PointNamingFactory
 
 	public Point put(Point p)
 	{
-		Point pt = null;
-		//If it exists, return it
-		if(get(p.getX(),p.getY()) != null) return get(p.getX(), p.getY());
-
-		//If there is a name, put point with name. If not, give it one. Add to database
-		if(!(p.getName().equals("__UNNAMED"))) pt = p;
-		else pt = new Point(getCurrentName(), p.getX(), p.getY());
-
-		_database.put(pt, pt);
-		return _database.get(pt);
+	   
+	    // If it exists, return the existing point
+	    if (get(p.getX(), p.getY()) != null) return get(p.getX(), p.getY());
+	    
+	    // If the point is unnamed, generate a name for it
+	    if (p.getName().equals("__UNNAMED")) {
+	        p = new Point(getCurrentName(), p.getX(), p.getY());
+	    }
+	   
+	    // Add the point to the database
+	    _database.put(p, p);
+	   
+	    // Return the added or generated point
+	    return p;
 	}
 
 	/**

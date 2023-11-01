@@ -6,6 +6,9 @@
 */
 
 package tests;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList; // import the ArrayList class
 import org.junit.jupiter.api.Test;
@@ -44,16 +47,16 @@ class PointDatabaseTest {
 		PointDatabase pd = build();
 		
 		// testing assert true with the build() function
-		assertTrue(pd.getName(6, 3) == "A");
-		assertTrue(pd.getName(4.3, 7.2) == "B");
-		assertTrue(pd.getName(4.2, 3) == "C");
-		assertTrue(pd.getName(7, 7) == "D");
+		assertTrue("PointDatabase failed to receive the correct name based on point information", pd.getName(6, 3) == "A");
+		assertTrue("PointDatabase failed to receive the correct name based on point information", pd.getName(4.3, 7.2) == "B");
+		assertTrue("PointDatabase failed to receive the correct name based on point information", pd.getName(4.2, 3) == "C");
+		assertTrue("PointDatabase failed to receive the correct name based on point information", pd.getName(7, 7) == "D");
 		
 		// checking the false case
-		assertFalse(pd.getName(6, 3) == "B");
-		assertFalse(pd.getName(4.3, 7.2) == "C");
-		assertFalse(pd.getName(4.2, 3) == "A");
-		assertFalse(pd.getName(7, 7) == "B");
+		assertFalse("PointDatabase returned true for an invalid name", pd.getName(6, 3) == "B");
+		assertFalse("PointDatabase returned true for an invalid name", pd.getName(4.3, 7.2) == "C");
+		assertFalse("PointDatabase returned true for an invalid name", pd.getName(4.2, 3) == "A");
+		assertFalse("PointDatabase returned true for an invalid name", pd.getName(7, 7) == "B");
 		
 		
 		
@@ -70,10 +73,10 @@ class PointDatabaseTest {
 		Point p4 = new Point("D", 7, 7);
 		
 		// checking true if it given the right name
-		assertTrue(pd.getName(p1) == "A");
-		assertTrue(pd.getName(p2) == "B");
-		assertTrue(pd.getName(p3) == "C");
-		assertTrue(pd.getName(p4) == "D");
+		assertTrue("PointDatabase failed to receive the correct name based on point", pd.getName(p1) == "A");
+		assertTrue("PointDatabase failed to receive the correct name based on point", pd.getName(p2) == "B");
+		assertTrue("PointDatabase failed to receive the correct name based on point", pd.getName(p3) == "C");
+		assertTrue("PointDatabase failed to receive the correct name based on point", pd.getName(p4) == "D");
 		
 	}
 	@Test
@@ -87,17 +90,17 @@ class PointDatabaseTest {
 		pd.put("E", 1, 2);
 		pd.put("F", 9, 0);
 		pd.put("G", 3, 1);
-		assertEquals(pd.size(),7);
+		assertEquals("PointDatabse failed to correctly return its size", pd.size(),7);
 		
 		// add more point to db to count
 		pd.put("H", 3, 0.3);
 		pd.put("X", 7, 2);
-		assertEquals(pd.size(),9);
+		assertEquals("PointDatabse failed to correctly return its size", pd.size(),9);
 		
 		// adding point that already exist and with duplicate name
 		pd.put("Y", 3, 1);
 		pd.put("X", 7, 2);
-		assertEquals(pd.size(),9);
+		assertEquals("PointDatabse failed to correctly return its size", pd.size(),9);
 		
 		
 		
@@ -116,16 +119,16 @@ class PointDatabaseTest {
 		Point p4 = new Point("D", 7, 7);
 		
 		// checking whether it return the right point
-		assertTrue(pd.getPoint("A").equals(p1));
-		assertTrue(pd.getPoint("B").equals(p2));
-		assertTrue(pd.getPoint("C").equals(p3));
-		assertTrue(pd.getPoint("D").equals(p4));
+		assertTrue("PointDatabse failed to get a point based on name", pd.getPoint("A").equals(p1));
+		assertTrue("PointDatabse failed to get a point based on name", pd.getPoint("B").equals(p2));
+		assertTrue("PointDatabse failed to get a point based on name", pd.getPoint("C").equals(p3));
+		assertTrue("PointDatabse failed to get a point based on name", pd.getPoint("D").equals(p4));
 		
 		// checking getPoint with no-name in the db exist which return null
-		assertTrue(pd.getPoint("E") == null);
-		assertTrue(pd.getPoint("X") == null);
-		assertTrue(pd.getPoint("Y") == null);
-		assertTrue(pd.getPoint("Z") == null);
+		assertTrue("PointDatabse failed to return a null name for a non-existant point", pd.getPoint("E") == null);
+		assertTrue("PointDatabse failed to return a null name for a non-existant point", pd.getPoint("X") == null);
+		assertTrue("PointDatabse failed to return a null name for a non-existant point", pd.getPoint("Y") == null);
+		assertTrue("PointDatabse failed to return a null name for a non-existant point", pd.getPoint("Z") == null);
 	}
 	@Test
 	void putTest() {
@@ -139,16 +142,16 @@ class PointDatabaseTest {
 		pd.put("H", 1.2, 1.6);
 		
 		// checking whether it is the point return the right name
-		assertTrue(pd.getName(1, 1)== "E");
-		assertTrue(pd.getName(3, 0.7)== "F");
-		assertTrue(pd.getName(3, 2.3)== "G");
-		assertTrue(pd.getName(1.2, 1.6)== "H");
+		assertTrue("PointDatabse failed to get a point based on name after putting", pd.getName(1, 1)== "E");
+		assertTrue("PointDatabse failed to get a point based on name after putting", pd.getName(3, 0.7)== "F");
+		assertTrue("PointDatabse failed to get a point based on name after putting", pd.getName(3, 2.3)== "G");
+		assertTrue("PointDatabse failed to get a point based on name after putting", pd.getName(1.2, 1.6)== "H");
 		
 		// checking the point return false if it is not the right name
-		assertFalse(pd.getName(1,4.2) == "E");
-		assertFalse(pd.getName(9.3,41) == "F");
-		assertFalse(pd.getName(1.3,1) == "G");
-		assertFalse(pd.getName(2.3,41) == "H");
+		assertFalse("PointDatabse failed to return a null name for a non-existant point", pd.getName(1,4.2) == "E");
+		assertFalse("PointDatabse failed to return a null name for a non-existant point", pd.getName(9.3,41) == "F");
+		assertFalse("PointDatabse failed to return a null name for a non-existant point", pd.getName(1.3,1) == "G");
+		assertFalse("PointDatabse failed to return a null name for a non-existant point", pd.getName(2.3,41) == "H");
 		
 	}
 	
@@ -164,16 +167,16 @@ class PointDatabaseTest {
 		Point p4 = new Point("D", 7, 7);
 		
 		// compare the point after getting it
-		assertTrue(pd.getPoint(p1).equals(p1));
-		assertTrue(pd.getPoint(p2).equals(p2));
-		assertTrue(pd.getPoint(p3).equals(p3));
-		assertTrue(pd.getPoint(p4).equals(p4));
+		assertTrue("PointDatabase failed to recognize a point that should be in the system", pd.getPoint(p1).equals(p1));
+		assertTrue("PointDatabase failed to recognize a point that should be in the system", pd.getPoint(p2).equals(p2));
+		assertTrue("PointDatabase failed to recognize a point that should be in the system", pd.getPoint(p3).equals(p3));
+		assertTrue("PointDatabase failed to recognize a point that should be in the system", pd.getPoint(p4).equals(p4));
 		
 		// checking the false case
-		assertFalse(pd.getPoint(p1).equals(p2));
-		assertFalse(pd.getPoint(p2).equals(p1));
-		assertFalse(pd.getPoint(p3).equals(p4));
-		assertFalse(pd.getPoint(p4).equals(p1));
+		assertFalse("PointDatabase recognized a point that should not be in the system", pd.getPoint(p1).equals(p2));
+		assertFalse("PointDatabase recognized a point that should not be in the system", pd.getPoint(p2).equals(p1));
+		assertFalse("PointDatabase recognized a point that should not be in the system", pd.getPoint(p3).equals(p4));
+		assertFalse("PointDatabase recognized a point that should not be in the system", pd.getPoint(p4).equals(p1));
 		
 	}
 	
@@ -189,16 +192,16 @@ class PointDatabaseTest {
 		Point p4 = new Point("D", 7, 7);
 		
 		// comparing the x,y with the point
-		assertTrue(pd.getPoint(6, 3).equals(p1));
-		assertTrue(pd.getPoint(4.3, 7.2).equals(p2));
-		assertTrue(pd.getPoint(4.2, 3).equals(p3));
-		assertTrue(pd.getPoint(7,7).equals(p4));
+		assertTrue("PointDatabase failed to recognize a point that should be in the system based on coordinates", pd.getPoint(6, 3).equals(p1));
+		assertTrue("PointDatabase failed to recognize a point that should be in the system based on coordinates", pd.getPoint(4.3, 7.2).equals(p2));
+		assertTrue("PointDatabase failed to recognize a point that should be in the system based on coordinates", pd.getPoint(4.2, 3).equals(p3));
+		assertTrue("PointDatabase failed to recognize a point that should be in the system based on coordinates", pd.getPoint(7,7).equals(p4));
 		
 		// checking the false case
-		assertFalse(pd.getPoint(6, 3).equals(p3));
-		assertFalse(pd.getPoint(4.3, 7.2).equals(p1));
-		assertFalse(pd.getPoint(4.2, 3).equals(p4));
-		assertFalse(pd.getPoint(7,7).equals(p2));
+		assertFalse("PointDatabase recognized a point that should not be in the system", pd.getPoint(6, 3).equals(p3));
+		assertFalse("PointDatabase recognized a point that should not be in the system", pd.getPoint(4.3, 7.2).equals(p1));
+		assertFalse("PointDatabase recognized a point that should not be in the system", pd.getPoint(4.2, 3).equals(p4));
+		assertFalse("PointDatabase recognized a point that should not be in the system", pd.getPoint(7,7).equals(p2));
 		
 	}
 	
