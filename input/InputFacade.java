@@ -1,22 +1,13 @@
 package input;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-
-import java.util.AbstractMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-
-import geometry_objects.points.Point;
-import geometry_objects.points.PointDatabase;
-import geometry_objects.Segment;
-import input.builder.GeometryBuilder;
-import input.components.ComponentNode;
-import input.components.FigureNode;
+import java.util.*;
+import geometry_objects.*;
+import geometry_objects.points.*;
+import input.builder.*;
+import input.components.*;
 import input.components.point.PointNode;
-import input.components.segment.SegmentNode;
-import input.parser.JSONParser;
+import input.parser.*;
 
 
 public class InputFacade
@@ -32,7 +23,10 @@ public class InputFacade
 	 */
 	public static FigureNode extractFigure(String filepath)
 	{
-		
+		GeometryBuilder GeoBuilder = new GeometryBuilder();
+		JSONParser parser = new JSONParser(GeoBuilder);
+		String figureStr = utilities.io.FileUtilities.readFileFilterComments(filepath);
+		return (FigureNode)parser.parse(figureStr);
 	}
 	
 	/**
@@ -46,6 +40,13 @@ public class InputFacade
 	public static Map.Entry<PointDatabase, Set<Segment>> toGeometryRepresentation(FigureNode fig)
 	{
 		// TODO
+		PointDatabase pd = new PointDatabase();
+		for(PointNode pn: fig.getPointsDatabase().getPoints()) {
+			pd.put(pn.getName(), pn.getX(), pn.getX());
+		}
+		
+		return
+		
 	}
 
     //	
