@@ -6,6 +6,8 @@
  */
 
 package tests;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
 import org.junit.jupiter.api.Test;
@@ -33,29 +35,29 @@ class PointNamingFactoryTest {
 		PointNamingFactory pnf = build();
 
 		//Existing points, should be true
-		assertTrue(pnf.get(1, 2).equals(new Point(1, 2)));
-		assertTrue(pnf.get(new Point(-5, 0)).equals(new Point(-5, 0)));
-		assertTrue(pnf.get(1, 2).equals(pnf.get(new Point(1, 2))));
+		assertTrue("PNF failed to find a point", pnf.get(1, 2).equals(new Point(1, 2)));
+		assertTrue("PNF failed to find a point", pnf.get(new Point(-5, 0)).equals(new Point(-5, 0)));
+		assertTrue("PNF failed to find a point", pnf.get(1, 2).equals(pnf.get(new Point(1, 2))));
 
 		//Equating to wrong point/not in pnf
-		assertFalse(pnf.get(1, 2).equals(new Point(9, 4)));
-		assertFalse(pnf.get(new Point(0, 15)).equals(new Point(0, 5)));
-		assertFalse(pnf.get(4, 12).equals(pnf.get(new Point(1, 2))));
+		assertFalse("PNF found a point that shouldn't exist", pnf.get(1, 2).equals(new Point(9, 4)));
+		assertFalse("PNF found a point that shouldn't exist", pnf.get(new Point(0, 15)).equals(new Point(0, 5)));
+		assertFalse("PNF found a point that shouldn't exist", pnf.get(4, 12).equals(pnf.get(new Point(1, 2))));
 
 		//Add a new one
-		assertTrue(pnf.get(0,0) == null);
+		assertTrue("PNF found a point that shouldn't exist", pnf.get(0,0) == null);
 		pnf.put(new Point(0, 0));
 
-		assertTrue(pnf.get(new Point(0, 0)).equals(new Point(0, 0)));
-		assertTrue(pnf.get(0, 0).equals(pnf.get(new Point(0, 0))));
-		assertTrue(pnf.get(0, 0).equals(new Point(0, 0)));
-		assertTrue(pnf.get(0, 0).getName().equals("*_G"));
+		assertTrue("PNF failed to find a point", pnf.get(new Point(0, 0)).equals(new Point(0, 0)));
+		assertTrue("PNF failed to find a point", pnf.get(0, 0).equals(pnf.get(new Point(0, 0))));
+		assertTrue("PNF failed to find a point", pnf.get(0, 0).equals(new Point(0, 0)));
+		assertTrue("PNF failed to find a point", pnf.get(0, 0).getName().equals("*_G"));
 
 		//Add a new one with name
-		assertTrue(pnf.get(23, 6) == null);
+		assertTrue("PNF found a point that shouldn't exist", pnf.get(23, 6) == null);
 		pnf.put(new Point("HI", 23, 6));
-		assertTrue(pnf.get(new Point(23, 6)).equals(new Point("HI", 23, 6)));
-		assertTrue(pnf.get(new Point(23, 6)).getName().equals("HI"));
+		assertTrue("PNF failed to find a point", pnf.get(new Point(23, 6)).equals(new Point("HI", 23, 6)));
+		assertTrue("PNF failed to find a point", pnf.get(new Point(23, 6)).getName().equals("HI"));
 	}
 	@Test
 	void containsTest() 
@@ -63,19 +65,19 @@ class PointNamingFactoryTest {
 		PointNamingFactory pnf = build();
 
 		//Good values
-		assertTrue(pnf.contains(new Point("*_A", 1, 2)));
-		assertTrue(pnf.contains(1, 2));
-		assertTrue(pnf.contains(new Point("*_A", 1, 2)));
-		assertTrue(pnf.contains(new Point(100, 0)));
-		assertTrue(pnf.contains(0, 15));
-		assertTrue(pnf.contains(new Point("*_E", -5, 0)));
+		assertTrue("PNF doesn't contain a value that it should", pnf.contains(new Point("*_A", 1, 2)));
+		assertTrue("PNF doesn't contain a value that it should", pnf.contains(1, 2));
+		assertTrue("PNF doesn't contain a value that it should", pnf.contains(new Point("*_A", 1, 2)));
+		assertTrue("PNF doesn't contain a value that it should", pnf.contains(new Point(100, 0)));
+		assertTrue("PNF doesn't contain a value that it should", pnf.contains(0, 15));
+		assertTrue("PNF doesn't contain a value that it should", pnf.contains(new Point("*_E", -5, 0)));
 
 		//Bad values
-		assertFalse(pnf.contains(new Point(10, 2)));
-		assertFalse(pnf.contains(1, 345));
-		assertFalse(pnf.contains(new Point("*_A", 13, 2)));
-		assertFalse(pnf.contains(new Point(1, 4)));
-		assertFalse(pnf.contains(1, 0));
+		assertFalse("PNF contains a value that it shouldn't", pnf.contains(new Point(10, 2)));
+		assertFalse("PNF contains a value that it shouldn't", pnf.contains(1, 345));
+		assertFalse("PNF contains a value that it shouldn't", pnf.contains(new Point("*_A", 13, 2)));
+		assertFalse("PNF contains a value that it shouldn't", pnf.contains(new Point(1, 4)));
+		assertFalse("PNF contains a value that it shouldn't", pnf.contains(1, 0));
 	}
 	@Test
 	void nameTest() 
@@ -111,11 +113,11 @@ class PointNamingFactoryTest {
 		pnf.put(new Point(13, 12));
 		pnf.put(new Point(245, 15));
 		//Checking increase in numLetters
-		assertTrue(pnf.get(245, 15).getName().equals("*_AA"));
+		assertTrue("PNF naming didn't increment numLetters", pnf.get(245, 15).getName().equals("*_AA"));
 		//Checks inserted point with name doesn't interrupt currentName
 		pnf.put(new Point("Inserted", -52, 0));
 		pnf.put(new Point(-53, 0));
-		assertTrue(pnf.get(-53, 0).getName().equals("*_BB"));
+		assertTrue("PNF naming was interrupted by a named point", pnf.get(-53, 0).getName().equals("*_BB"));
 		pnf.put(new Point(1005, 0));
 		pnf.put(new Point(1, 234));
 		pnf.put(new Point(9, 4432));
@@ -142,11 +144,11 @@ class PointNamingFactoryTest {
 		pnf.put(new Point(13, 24));
 		pnf.put(new Point(92, 423));
 		pnf.put(new Point(422, 12));
-		assertTrue(pnf.get(422, 12).getName().equals("*_AAA"));
+		assertTrue("PNF naming didn't increment numLetters", pnf.get(422, 12).getName().equals("*_AAA"));
 		pnf.put(new Point(21, 215));
-		assertTrue(pnf.get(21, 215).getName().equals("*_BBB"));
+		assertTrue("PNF currentName didn't move along how it should", pnf.get(21, 215).getName().equals("*_BBB"));
 		pnf.put(new Point("ABCD", 125, 87));
-		assertTrue(pnf.get(125, 87).getName().equals("ABCD"));
+		assertTrue("PNF naming didn't add a named point correctly", pnf.get(125, 87).getName().equals("ABCD"));
 
 	}
 }

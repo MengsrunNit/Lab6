@@ -20,9 +20,7 @@ class InputFacadeTest {
 	void single_traingle_Test() {
 		FigureNode n = InputFacade.extractFigure("single_triangle.json");
 		Map.Entry<PointDatabase, Set<Segment>> m = InputFacade.toGeometryRepresentation(n);
-
 		PointDatabase pn = m.getKey();
-
 
 		//Creates points mathching those in the figure - checks if there and equal
 		Point p1 = new Point("A", 0, 0);
@@ -74,8 +72,8 @@ class InputFacadeTest {
 		assertTrue("Segment is not within the figure's segSet", segSet.contains(cd));
 		assertTrue("Segment is not within the figure's segSet", segSet.contains(de));
 		assertTrue("Segment is not within the figure's segSet", segSet.contains(ef));
-
 	}
+	
 	@Test
 	void crossing_symmetric_triangleTest() {
 		FigureNode fn = InputFacade.extractFigure("crossing_symmetric_triangle.json");
@@ -112,7 +110,5 @@ class InputFacadeTest {
 		assertTrue("Segment is not within the figure's segSet", segSet.contains(cd));
 		assertTrue("Segment is not within the figure's segSet", segSet.contains(ce));
 		assertTrue("Segment is not within the figure's segSet", segSet.contains(de));
-
-
 	}
 }
