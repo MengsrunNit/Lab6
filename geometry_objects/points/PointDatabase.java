@@ -33,6 +33,7 @@ public class PointDatabase
 
 	public PointDatabase(List<Point> pts)
 	{
+		_factory = new PointNamingFactory();
        for(Point p : pts) {
     	   _factory.put(p);
        }

@@ -45,8 +45,9 @@ public class PointNamingFactory
 	
 	public PointNamingFactory(List<Point> points)
 	{
+		_database = new LinkedHashMap<Point, Point>();
 		for (Point p : points) {
-			_database.put(p, p);
+			put(p);
 		}
 	}
 
@@ -62,10 +63,16 @@ public class PointNamingFactory
 	
 	public Point put(Point p)
 	{
-		//Checks if it exists, returns it if it does. Otherwise, add new point
-		if(get(p) != null) return get(p);
-		_database.put(p, p);
-		return _database.get(p);
+		Point pt = null;
+		//If it exists, return it
+		if(get(p.getX(),p.getY()) != null) return get(p.getX(), p.getY());
+		
+		//If there is a name, put point with name. If not, give it one. Add to database
+		if(p._name == "__UNNAMED") pt = p;
+		pt = new Point(getCurrentName(), p.getX(), p.getY());
+		
+		_database.put(pt, pt);
+		return _database.get(pt);
 	}
 
 	/**
@@ -81,11 +88,8 @@ public class PointNamingFactory
 	
 	public Point put(double x, double y)
 	{
-		//Checks if it exists before giving it a name, so that it doesn't update name
-		if(get(x,y) != null) return get(x, y);
-		//Calls other if doesn't exist
-		Point p = new Point(getCurrentName(), x, y);
-		return put(p);
+		//Calls other
+		return put(new Point(x, y));
 	}
 
 	/**
@@ -110,8 +114,7 @@ public class PointNamingFactory
 	public Point put(String name, double x, double y)
 	{
 		//Calls other
-		Point p = new Point(name, x, y);
-		return put(p);
+		return put(new Point(name, x, y));
 	}    
 
 	/**
@@ -123,17 +126,20 @@ public class PointNamingFactory
 	 */
 	public Point get(double x, double y)
 	{
-		//Checks for containment, returning point if it exist
-		Point p = new Point(x, y);
-		//Could be contains key or value
-		if (_database.containsValue(p)) return p;
-		return null;
+		//Calls other
+		return get(new Point(x, y));
 	}	
 
-	public Point get(Point pt)
+	public Point get(Point p)
 	{
-		//Calls other
-		return get(pt._x, pt._y);
+		//If contains, loop through and find the match, then return the one in the database to ensure name
+		if (_database.containsValue(p)) {
+			for (Point pt: _database.values()) {
+				if (p.getX() == pt.getX() && p.getY() == pt.getY()) return pt;
+			}
+		}
+		//Return null if doesn't contain
+		return null;	
 	}
 
 	/**
@@ -144,14 +150,13 @@ public class PointNamingFactory
 	
 	public boolean contains(double x, double y) 
 	{ 
-		//Could be contains key or value, checks for containment
-		return _database.containsValue(new Point(x, y)); 
+		//Calls other
+		return contains(new Point(x, y)); 
 	}
 
 	public boolean contains(Point p) 
 	{ 
-		//Calls other
-		return contains(p.getX(), p.getY());
+		return _database.containsValue(p);
 	}
 
 

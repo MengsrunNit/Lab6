@@ -25,7 +25,8 @@ public class InputFacade
 		GeometryBuilder GeoBuilder = new GeometryBuilder();
 		JSONParser parser = new JSONParser(GeoBuilder);
 		String figureStr = utilities.io.FileUtilities.readFileFilterComments(filepath);
-		return (FigureNode)parser.parse(figureStr);
+		FigureNode n = (FigureNode) parser.parse(figureStr);
+		return n;
 	}
 	
 	/**
@@ -46,7 +47,7 @@ public class InputFacade
 		
 	}
 	
-	public static PointDatabase toPointDatabase(Set<PointNode> pnd) {
+	private static PointDatabase toPointDatabase(Set<PointNode> pnd) {
 		
 		//Loops through the given PND, adds each PN as Points in PointDatabase
 		PointDatabase pd = new PointDatabase();
@@ -55,7 +56,7 @@ public class InputFacade
 		}
 		return pd;
 	}
-	public static HashSet<Segment> toSegmentSet(Map<PointNode, Set<PointNode>> ss) {
+	private static HashSet<Segment> toSegmentSet(Map<PointNode, Set<PointNode>> ss) {
 		
 		//Loops throught the given _adjLists, making Segment objects for each value in a given key
 		HashSet<Segment> segSet = new HashSet<Segment>();

@@ -108,4 +108,5 @@ public class Point implements Comparable<Point>
 		//Test equivalence
         return MathUtilities.doubleEquals(n._x, _x) && MathUtilities.doubleEquals(n._y, _y);
 	}
+
 }
