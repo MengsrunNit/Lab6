@@ -79,13 +79,15 @@ public class Point implements Comparable<Point>
 	 */
 	public static int LexicographicOrdering(Point p1, Point p2)
 	{
-
+		//Returns correct value based on how the x values relate
 		if(p1._x > p2._x) return 1;
 		if(p1._x < p2._x) return -1;
 		
+		//If x is equal, move on to y
 		if(p1._y > p2._y) return 1;
 		if(p1._y < p2._y) return -1;
 		
+		//If both are equal, return 0
 		return 0;		  
 		
 	}
@@ -100,8 +102,10 @@ public class Point implements Comparable<Point>
 	@Override
 	public boolean equals(Object obj)
 	{
+		//Weed out bad stuff
 		if (obj == null || (!(obj instanceof Point))) return false;
 		Point n = (Point) obj;
+		//Test equivalence
         return MathUtilities.doubleEquals(n._x, _x) && MathUtilities.doubleEquals(n._y, _y);
 	}
 }

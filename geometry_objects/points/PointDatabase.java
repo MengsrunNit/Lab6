@@ -1,9 +1,6 @@
 package geometry_objects.points;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
+import java.util.*;
 /**
  * This class represents a bi-directional database of points.
  * 
@@ -24,18 +21,21 @@ public class PointDatabase
     //
     protected PointNamingFactory _factory;
 
-    public Set<Point> getPoints() { return _factory.getAllPoints(); }
+    public Set<Point> getPoints() 
+    { 
+    	return _factory.getAllPoints(); 
+    }
     
 	public PointDatabase()
 	{
-        // TODO
 		_factory = new PointNamingFactory(); 
 	}
 
-	public PointDatabase(List<Point> points)
+	public PointDatabase(List<Point> pts)
 	{
-        // TODO
-		
+       for(Point p : pts) {
+    	   _factory.put(p);
+       }
 	}
 
 	public int size() { return _factory.size(); }
@@ -43,12 +43,8 @@ public class PointDatabase
 	/**
 	 * Add a point to the database.
 	 */
-	public void put(String name, double x, double y)
-	{
-		// Put the name, x, y into the _factoryDatabaseName
-		_factory.put(name, x, y);
-		
-	}
+	
+	public void put(String name, double x, double y){ _factory.put(name, x, y); }
 
 	/**
 	 * Given raw coordinates of a point, determine if it is named.
@@ -56,17 +52,17 @@ public class PointDatabase
 	 * @param x,y -- doubles defining a point (x,y)
 	 * @return a string corresponding to that point, if it is named.
 	 */
+	
 	public String getName(double x, double y)
 	{
-        // TODO
-		return _factory.get(x,y).getName();
-		
+		//Calls other
+		return getName(new Point(x, y));
 	}
-	public String getName(Point pt)
+	
+	public String getName(Point p)
 	{
-        // return the name of the point through get method from _factory
-		return _factory.get(pt).getName();
-		
+		//Gives name of point in the factory
+		return _factory.get(p).getName();
 	}
 
 	/**
@@ -75,18 +71,17 @@ public class PointDatabase
 	 * @param name -- a String name
 	 * @return a Point object containing (x,y) corresponding to name, if it has been defined.
 	 */
+	
 	public Point getPoint(String name)
 	{
-        // TODO
 		// iterate through all the point in the database and compare to the name
-		for(Point pt: _factory.getAllPoints()) {
-			if(name.equals(pt.getName())) {
-				return pt; 
+		for(Point p: _factory.getAllPoints()) {
+			if(name.equals(p.getName())) {
+				return p; 
 			}
 		}
 		// if there is no point name exist return null
-		return null; 
-		
+		return null; 	
 	}
 
 	/**
@@ -96,10 +91,10 @@ public class PointDatabase
 	 * @param pt -- a basic point
 	 * @return the database entry for the point
 	 */
-	public Point getPoint(Point pt)
+	public Point getPoint(Point p)
 	{
-        // TODO
-		return _factory.get(pt);
+		//May need more
+		return _factory.get(p);
 	}
 
 	/**
@@ -110,7 +105,8 @@ public class PointDatabase
 	 */
 	public Point getPoint(double x, double y)
 	{
-        return _factory.get(x, y);
+		//Calls other
+        return getPoint(new Point(x, y));
 		
 	}
 }

@@ -1,10 +1,6 @@
 package geometry_objects.points;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 /*
  * Given a pair of coordinates; generate a unique name for it;
@@ -39,19 +35,16 @@ public class PointNamingFactory
 
 	public PointNamingFactory()
 	{
-		// TODO
-
 		_database = new LinkedHashMap<Point, Point>(); 
 	}
 
 	/**
 	 * Initialize the database with points; must call put() to ensure all points are named
-	 *
 	 * @param points -- a list of points, named or not named
 	 */
+	
 	public PointNamingFactory(List<Point> points)
 	{
-		// TODO
 		for (Point p : points) {
 			_database.put(p, p);
 		}
@@ -66,11 +59,13 @@ public class PointNamingFactory
 	 * the object in the database if it already exists or
 	 * a completely new point that has been added to the database
 	 */
-	public Point put(Point pt)
+	
+	public Point put(Point p)
 	{
-		// TODO
-		_database.put(pt, pt);
-		return _database.get(pt);
+		//Checks if it exists, returns it if it does. Otherwise, add new point
+		if(get(p) != null) return get(p);
+		_database.put(p, p);
+		return _database.get(p);
 	}
 
 	/**
@@ -83,13 +78,13 @@ public class PointNamingFactory
 	 * the object in the database if it already exists or
 	 * a completely new point that has been added to the database (with generated name)
 	 */
+	
 	public Point put(double x, double y)
 	{
-		// TODO
-		if(get(x,y) == null) {
-			
-		}
-		Point p = new Point(x, y);
+		//Checks if it exists before giving it a name, so that it doesn't update name
+		if(get(x,y) != null) return get(x, y);
+		//Calls other if doesn't exist
+		Point p = new Point(getCurrentName(), x, y);
 		return put(p);
 	}
 
@@ -111,9 +106,10 @@ public class PointNamingFactory
 	 *         
 	 *         The exception is that a valid name can overwrite an unnamed point.
 	 */
+	
 	public Point put(String name, double x, double y)
 	{
-		// TODO
+		//Calls other
 		Point p = new Point(name, x, y);
 		return put(p);
 	}    
@@ -127,15 +123,17 @@ public class PointNamingFactory
 	 */
 	public Point get(double x, double y)
 	{
-		// TODO
+		//Checks for containment, returning point if it exist
 		Point p = new Point(x, y);
-		return get(p);
+		//Could be contains key or value
+		if (_database.containsValue(p)) return p;
+		return null;
 	}	
 
 	public Point get(Point pt)
 	{
-		// TODO
-		return _database.get(pt);
+		//Calls other
+		return get(pt._x, pt._y);
 	}
 
 	/**
@@ -143,13 +141,18 @@ public class PointNamingFactory
 	 * @param y -- single coordinate
 	 * @return simple containment; no updating
 	 */
-	public boolean contains(double x, double y) { return _database.containsKey(_PREFIX) }
+	
+	public boolean contains(double x, double y) 
+	{ 
+		//Could be contains key or value, checks for containment
+		return _database.containsValue(new Point(x, y)); 
+	}
 
-	public boolean contains(Point p) { 
+	public boolean contains(Point p) 
+	{ 
+		//Calls other
 		return contains(p.getX(), p.getY());
-
-
-		/* TODO */ }
+	}
 
 
 	/**
@@ -163,7 +166,7 @@ public class PointNamingFactory
 	 */
 	private String getCurrentName()
 	{
-		// TODO
+		//Saves current name before updating, then returns it.
 		String currentName = _PREFIX + _currentName;
 		updateName();
 		return currentName; 
@@ -177,29 +180,31 @@ public class PointNamingFactory
 	 */
 	private void updateName()
 	{
-		// TODO
+		
+		//'Incrementing' the character
 		char currentChar = _currentName.charAt(0);
 		int intChar = currentChar + 1; 
 		char updateChar = (char) intChar;
 
+		//Increases numLetters after Z, then resets update charater to A
 		if(updateChar > END_LETTER ) {
 			_numLetters++; 
 			updateChar = START_LETTER; 
 		}
+		
+		//Updates current characters to the new character
 		_currentName = "";
 		for (int i=0; i< _numLetters; i++) {
 			_currentName += updateChar; 
 		}
-	
 	}
 
 	/**
-	 * @return The enti
-	 * re database of points.
+	 * @return The entire database of points.
 	 */
 	public  Set<Point> getAllPoints()
 	{
-		// TODO
+		//Loop through database - add to new set
 		Set<Point> pointSet = new HashSet<Point>(); 
 		for(Point pt: _database.keySet()) {
 			pointSet.add(pt);
@@ -213,6 +218,11 @@ public class PointNamingFactory
 	@Override
 	public String toString()
 	{
-		// TODO
+		//Loop through each point, make a big string to print of its info. 
+		String s = "";
+		for(Point p : _database.keySet()) {
+			s += p._name + ": (" + p._x + ", " + p._y + ") \n";
+		}
+		return s;
 	}
 }
