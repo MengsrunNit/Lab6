@@ -1,3 +1,11 @@
+/**
+* This class represents a Point, while housing
+* methods to create and compare them.
+*
+* @author Flynn Nisbet, Mengsrun Nit
+* @date Nov. 1st, 2023
+*/
+
 package geometry_objects.points;
 
 import utilities.math.MathUtilities;

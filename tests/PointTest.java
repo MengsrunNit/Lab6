@@ -1,28 +1,79 @@
+/**
+* This class tests the capabilities of the Point Class
+*
+* @author Flynn Nisbet, Mengsrun Nit
+* @date Nov. 1st, 2023
+*/
 package tests;
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import geometry_objects.*;
-import geometry_objects.points.*;
 import org.junit.jupiter.api.Test;
+
+import geometry_objects.points.Point;
 
 class PointTest {
 	@Test
 	void lexTest() {
+		
+		//Relying on x, both ways
 		Point p1 = new Point(1, 2);
 		Point p2 = new Point(2, 1);
-		
 		assertEquals(Point.LexicographicOrdering(p1, p2),-1);
+		Point p3 = new Point(100, 0);
+		Point p4 = new Point(-100, 100);
+		assertEquals(Point.LexicographicOrdering(p3, p4), 1);
 		
+		//Relying on y, both ways
+		Point p5 = new Point(100, 0);
+		Point p6 = new Point(100, 100);
+		assertEquals(Point.LexicographicOrdering(p5, p6), -1);
+		Point p7 = new Point(100, 1000);
+		Point p8 = new Point(100, 100);
+		assertEquals(Point.LexicographicOrdering(p7, p8), 1);
+		
+		//Equal
+		Point p9 = new Point(100, 100);
+		Point p10 = new Point(100, 100);
+		assertEquals(Point.LexicographicOrdering(p9, p10), 0);
+	}
+	void compareTest() {
+		
+		//Same tests as above, pushed through compareTo
+		Point p1 = new Point(1, 2);
+		Point p2 = new Point(2, 1);
+		assertEquals(p1.compareTo(p2),-1);
+		Point p3 = new Point(100, 0);
+		Point p4 = new Point(-100, 100);
+		assertEquals(p3.compareTo(p4), 1);
+		Point p5 = new Point(100, 0);
+		Point p6 = new Point(100, 100);
+		assertEquals(p5.compareTo(p6),-1);
+		Point p7 = new Point(100, 1000);
+		Point p8 = new Point(100, 100);
+		assertEquals(p7.compareTo(p8),1);
+		Point p9 = new Point(100, 100);
+		Point p10 = new Point(100, 100);
+		assertEquals(p9.compareTo(p10),0);
+		assertEquals(p1.compareTo(null),1);
 	}
 	
 	@Test
 	void equalsTest() {
-		Point p1 = new Point("A",1, 2);
-		Point p2 = new Point("C",2, 1);
 		
-		assertEquals(p1.equals(p2), false);
+		//Tests different
+		Point p1 = new Point("A", 1, 2);
+		Point p2 = new Point("A", 2, 1);
+		assertFalse(p1.equals(p2));
 		
+		//Tests same
+		Point p3 = new Point("A", 2, 1);
+		assertTrue(p3.equals(p2));
+		
+		//Tests same point, but different name 
+		Point p4 = new Point("B", 1, 2);
+		assertTrue(p4.equals(p1));
 	}
+	
 }

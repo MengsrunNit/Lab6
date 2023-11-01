@@ -1,3 +1,11 @@
+/**
+* This class allows for interaction with underlying classed in the input package. It
+* gives users a better sense of what they can do with this system.
+*
+* @author Flynn Nisbet, Mengsrun Nit
+* @date Nov. 1st, 2023
+*/
+
 package input;
 
 import java.util.*;
@@ -22,11 +30,11 @@ public class InputFacade
 	 */
 	public static FigureNode extractFigure(String filepath)
 	{
+		//Parses the JSON file in the same way as we have done previously, but returns FigureNode
 		GeometryBuilder GeoBuilder = new GeometryBuilder();
 		JSONParser parser = new JSONParser(GeoBuilder);
 		String figureStr = utilities.io.FileUtilities.readFileFilterComments(filepath);
-		FigureNode n = (FigureNode) parser.parse(figureStr);
-		return n;
+		return (FigureNode) parser.parse(figureStr);
 	}
 	
 	/**

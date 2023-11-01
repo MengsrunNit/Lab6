@@ -1,3 +1,10 @@
+/**
+* This class tests the capabilities of the PointDatabase Class
+*
+* @author Flynn Nisbet, Mengsrun Nit
+* @date Nov. 1st, 2023
+*/
+
 package tests;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList; // import the ArrayList class

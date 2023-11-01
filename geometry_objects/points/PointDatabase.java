@@ -1,5 +1,13 @@
-package geometry_objects.points;
+/**
+* Stores all points in a geometry figure by allowing the user to
+* add new points to the database as well as look up points by 
+* name or by coordinate values.
+*
+* @author Flynn Nisbet, Mengsrun Nit
+* @date Nov. 1st, 2023
+*/
 
+package geometry_objects.points;
 import java.util.*;
 /**
  * This class represents a bi-directional database of points.
@@ -54,16 +62,14 @@ public class PointDatabase
 	 * @return a string corresponding to that point, if it is named.
 	 */
 	
-	public String getName(double x, double y)
-	{
-		//Calls other
-		return getName(new Point(x, y));
-	}
+	public String getName(double x, double y){ return getName(new Point(x, y)); }
 	
 	public String getName(Point p)
 	{
-		//Gives name of point in the factory
-		return _factory.get(p).getName();
+		//Gives name of point in the factory if exists
+		if (_factory.get(p) != null) return _factory.get(p).getName();
+		return null;
+		
 	}
 
 	/**
@@ -92,11 +98,7 @@ public class PointDatabase
 	 * @param pt -- a basic point
 	 * @return the database entry for the point
 	 */
-	public Point getPoint(Point p)
-	{
-		//May need more
-		return _factory.get(p);
-	}
+	public Point getPoint(Point p) { return _factory.get(p); }
 
 	/**
 	 * Given a raw point (x, y), acquire the stored database object.
@@ -104,10 +106,5 @@ public class PointDatabase
 	 * @param x,y -- doubles defining a point (x,y)
 	 * @return the database entry for the point
 	 */
-	public Point getPoint(double x, double y)
-	{
-		//Calls other
-        return getPoint(new Point(x, y));
-		
-	}
+	public Point getPoint(double x, double y){ return getPoint(new Point(x, y)); }
 }

@@ -1,5 +1,12 @@
-package geometry_objects.points;
+/**
+ * All points in our database must be named. If a name is not provided, the PointNamingFactory will
+ * generate one. It also hosts some other functions for the database.
+ *
+ * @author Flynn Nisbet, Mengsrun Nit
+ * @date Nov. 1st, 2023
+ */
 
+package geometry_objects.points;
 import java.util.*;
 
 /*
@@ -42,7 +49,7 @@ public class PointNamingFactory
 	 * Initialize the database with points; must call put() to ensure all points are named
 	 * @param points -- a list of points, named or not named
 	 */
-	
+
 	public PointNamingFactory(List<Point> points)
 	{
 		_database = new LinkedHashMap<Point, Point>();
@@ -60,17 +67,17 @@ public class PointNamingFactory
 	 * the object in the database if it already exists or
 	 * a completely new point that has been added to the database
 	 */
-	
+
 	public Point put(Point p)
 	{
 		Point pt = null;
 		//If it exists, return it
 		if(get(p.getX(),p.getY()) != null) return get(p.getX(), p.getY());
-		
+
 		//If there is a name, put point with name. If not, give it one. Add to database
-		if(p._name == "__UNNAMED") pt = p;
-		pt = new Point(getCurrentName(), p.getX(), p.getY());
-		
+		if(!(p.getName().equals("__UNNAMED"))) pt = p;
+		else pt = new Point(getCurrentName(), p.getX(), p.getY());
+
 		_database.put(pt, pt);
 		return _database.get(pt);
 	}
@@ -85,7 +92,7 @@ public class PointNamingFactory
 	 * the object in the database if it already exists or
 	 * a completely new point that has been added to the database (with generated name)
 	 */
-	
+
 	public Point put(double x, double y)
 	{
 		//Calls other
@@ -110,7 +117,7 @@ public class PointNamingFactory
 	 *         
 	 *         The exception is that a valid name can overwrite an unnamed point.
 	 */
-	
+
 	public Point put(String name, double x, double y)
 	{
 		//Calls other
@@ -147,7 +154,7 @@ public class PointNamingFactory
 	 * @param y -- single coordinate
 	 * @return simple containment; no updating
 	 */
-	
+
 	public boolean contains(double x, double y) 
 	{ 
 		//Calls other
@@ -185,7 +192,7 @@ public class PointNamingFactory
 	 */
 	private void updateName()
 	{
-		
+
 		//'Incrementing' the character
 		char currentChar = _currentName.charAt(0);
 		int intChar = currentChar + 1; 
@@ -196,7 +203,7 @@ public class PointNamingFactory
 			_numLetters++; 
 			updateChar = START_LETTER; 
 		}
-		
+
 		//Updates current characters to the new character
 		_currentName = "";
 		for (int i=0; i< _numLetters; i++) {

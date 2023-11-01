@@ -1,11 +1,14 @@
+/**
+ * This class tests the capabilities of the PointNamingFactory Class
+ *
+ * @author Flynn Nisbet, Mengsrun Nit
+ * @date Nov. 1st, 2023
+ */
+
 package tests;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.*;
-
 import org.junit.jupiter.api.Test;
-
 import geometry_objects.points.*;
 class PointNamingFactoryTest {
 
@@ -17,7 +20,7 @@ class PointNamingFactoryTest {
 		l.add(new Point(0, 15));
 		l.add(new Point(-5, 0));
 		l.add(new Point(100, 0));
-		
+
 		//Testing constructor
 		PointNamingFactory pnf = new PointNamingFactory(l);
 		return pnf;
@@ -28,42 +31,45 @@ class PointNamingFactoryTest {
 	void putAndGetTest() 
 	{
 		PointNamingFactory pnf = build();
-		
+
 		//Existing points, should be true
 		assertTrue(pnf.get(1, 2).equals(new Point(1, 2)));
 		assertTrue(pnf.get(new Point(-5, 0)).equals(new Point(-5, 0)));
 		assertTrue(pnf.get(1, 2).equals(pnf.get(new Point(1, 2))));
-		
+
 		//Equating to wrong point/not in pnf
 		assertFalse(pnf.get(1, 2).equals(new Point(9, 4)));
 		assertFalse(pnf.get(new Point(0, 15)).equals(new Point(0, 5)));
 		assertFalse(pnf.get(4, 12).equals(pnf.get(new Point(1, 2))));
-		
+
 		//Add a new one
-		Point a = new Point(0, 0);
-		assertTrue(pnf.get(a) == null);
-		pnf.put(a);
-	
-		assertTrue(pnf.get(new Point("G", 0, 0)).equals(new Point("G", 0, 0)));
-		assertTrue(pnf.get(a).equals(a));
-		assertTrue(pnf.get(a).equals(new Point("G", 0, 0)));
+		assertTrue(pnf.get(0,0) == null);
+		pnf.put(new Point(0, 0));
+
+		assertTrue(pnf.get(new Point(0, 0)).equals(new Point(0, 0)));
+		assertTrue(pnf.get(0, 0).equals(pnf.get(new Point(0, 0))));
+		assertTrue(pnf.get(0, 0).equals(new Point(0, 0)));
 		assertTrue(pnf.get(0, 0).getName().equals("*_G"));
 
-		
+		//Add a new one with name
+		assertTrue(pnf.get(23, 6) == null);
+		pnf.put(new Point("HI", 23, 6));
+		assertTrue(pnf.get(new Point(23, 6)).getName().equals("HI"));
+		assertTrue(pnf.get(new Point("HI", 23, 6)).getName().equals("HI"));
 	}
 	@Test
 	void containsTest() 
 	{
 		PointNamingFactory pnf = build();
 
-		//Good and happy valuess
+		//Good values
 		assertTrue(pnf.contains(new Point("*_A", 1, 2)));
 		assertTrue(pnf.contains(1, 2));
 		assertTrue(pnf.contains(new Point("*_A", 1, 2)));
 		assertTrue(pnf.contains(new Point(100, 0)));
 		assertTrue(pnf.contains(0, 15));
 		assertTrue(pnf.contains(new Point("*_E", -5, 0)));
-		
+
 		//Bad values
 		assertFalse(pnf.contains(new Point(10, 2)));
 		assertFalse(pnf.contains(1, 345));
@@ -74,6 +80,7 @@ class PointNamingFactoryTest {
 	@Test
 	void nameTest() 
 	{
+		//Pushing self-naming to two, then three letters
 		PointNamingFactory pnf = build();
 		pnf.put(new Point(1, 2));
 		pnf.put(new Point(9, 4));
@@ -103,7 +110,9 @@ class PointNamingFactoryTest {
 		pnf.put(new Point(8, 4));
 		pnf.put(new Point(13, 12));
 		pnf.put(new Point(245, 15));
+		assertTrue(pnf.get(245, 15).getName().equals("*_AA"));
 		pnf.put(new Point(-53, 0));
+		assertTrue(pnf.get(-53, 0).getName().equals("*_BB"));
 		pnf.put(new Point(1005, 0));
 		pnf.put(new Point(1, 234));
 		pnf.put(new Point(9, 4432));
@@ -130,10 +139,11 @@ class PointNamingFactoryTest {
 		pnf.put(new Point(13, 24));
 		pnf.put(new Point(92, 423));
 		pnf.put(new Point(422, 12));
+		assertTrue(pnf.get(422, 12).getName().equals("*_AAA"));
 		pnf.put(new Point(21, 215));
-		pnf.put(new Point(-35, 20));
-		pnf.put(new Point(10701, 0));
-		System.out.println(pnf);
+		assertTrue(pnf.get(21, 215).getName().equals("*_BBB"));
+		pnf.put(new Point("ABCD", 125, 87));
+		assertTrue(pnf.get(125, 87).getName().equals("ABCD"));
 
 	}
 }
